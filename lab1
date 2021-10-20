@@ -1,0 +1,66 @@
+-- Q1 select null titles in the table 
+select *from titles where price is null
+
+-- Q2 equate prices with null values to 20 of data type money
+select title, coalesce(price::numeric , 20)::money from titles
+
+-------Q3 selects a substring of the string in the records
+select substr(pr_info,0,50) from pub_info pi2 
+
+
+--Q4 converts dates to varchar
+select (ord_date::varchar) from sales s 
+
+
+--Q 5 converts to a more readable format
+select to_char(ord_date, 'Day DDth Month yyyy') from sales
+
+
+-- Q6 select current_date 
+select to_char(current_date, 'Day DDth Month yyy') -- turns the date to readble format
+
+select current_time 
+
+select current_timestamp 
+
+select to_date('2018-09-26', 'yyyy-mm-dd') 
+
+select to_timestamp('2018-09-26', 'yyyy-mm-dd: hh:mm:ss') 
+
+select to_date('2018-12-25', 'yyyy-mm-dd') - to_date('2018-09-26', 'yyyy-mm-dd') 
+
+select current_date - pubdate from titles
+
+select date_part('year', pubdate) from titles;
+
+-- display the day of publication of each book
+select date_part('day', pubdate) from titles;
+
+select to_date('2018-03-02', 'yyyy-mm-dd') - to_date('2018-02-01', 'yyyy-mm-dd') 
+
+-- Calculatin the difference between dates and adding the them to the ord
+select to_char(ord_date, 'Day DDth Month yyyy') , (current_date - '2011-01-01'::date) as Difference, 
+((current_date - '2011-01-01'::date) + ord_date)
+as "Sales Date" from sales s; 
+
+
+select '2021-12-25'::date - current_date as DaysToChristmas;
+
+select  current_date  - '1990-05-14'::date as myAge
+
+select date_part('day', current_date - pubdate)::numeric from titles s;
+
+select to_char(ord_date,'dd/mm/yy') as "Order Date" from sales 
+
+-- Q13
+--select  substr(au_lname,1,1) || initcap(substr(au_lname,2,1)) || substr(au_lname,3)  as LastName from authors;
+
+
+--Question 11
+select coalesce (price::numeric , floor(random() * 100 + 1)::int) as new_price from titles where price is null;
+
+-- Question 12
+select phone , substr(phone,4) as new_phone from authors;
+
+-- Question 13
+select au_lname,  substr(au_lname,1,1) || initcap(substr(au_lname,2,1)) || substr(au_lname,3)  as LastName from authors;
